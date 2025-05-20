@@ -15,7 +15,7 @@ class Message(Base):
     role = Column(String, nullable=False)  # e.g., "user", "model"
     content = Column(Text, nullable=False)
     timestamp = Column(DateTime(timezone=True), server_default=func.now())
-    embedding = Column(Vector(settings.EMBEDDING_DIMENSION))
+    embedding = Column(Vector(1536))
 
     def __repr__(self):
         return f"<Message(id={self.id}, session_id='{self.session_id}', role='{self.role}')>" 
