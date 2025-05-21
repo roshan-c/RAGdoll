@@ -85,14 +85,7 @@ This is the easiest way to get a PostgreSQL instance with the `pgvector` extensi
 1.  **Ensure Docker is installed and running.**
 2.  **Run the PostgreSQL container with pgvector:**
     ```bash
-    docker run -d \\
-      --name ragdoll-postgres-db \\
-      -e POSTGRES_USER=myuser \\
-      -e POSTGRES_PASSWORD=mypassword \\
-      -e POSTGRES_DB=mydatabase \\
-      -p 5432:5432 \\
-      -v ragdoll-pgdata:/var/lib/postgresql/data \\
-      pgvector/pgvector:pg16
+    docker run -d --name ragdoll-postgres-db -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydatabase -p 5432:5432 -v ragdoll-pgdata:/var/lib/postgresql/data pgvector/pgvector:pg16
     ```
     *   Replace `myuser`, `mypassword`, `mydatabase` if you wish, but ensure they match your `.env` file.
     *   `ragdoll-pgdata` is a Docker volume to persist data.

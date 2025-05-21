@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.db.models import Message
 from app.core.embedding import generate_embedding
 
-def store_user_message(db: Session, session_id: str, content: str, user_id: str = None) -> Message:
+async def store_user_message(db: Session, session_id: str, content: str, user_id: str = None) -> Message:
     """
     Stores a user message in the database.
 
@@ -16,7 +16,7 @@ def store_user_message(db: Session, session_id: str, content: str, user_id: str 
     Returns:
         The created Message object.
     """
-    embedding = generate_embedding(content)
+    embedding = await generate_embedding(content)
     
     db_message = Message(
         session_id=session_id,
@@ -31,7 +31,7 @@ def store_user_message(db: Session, session_id: str, content: str, user_id: str 
     db.refresh(db_message)  # To get the ID and other server-generated defaults like timestamp
     return db_message
 
-def store_model_response(db: Session, session_id: str, content: str) -> Message:
+async def store_model_response(db: Session, session_id: str, content: str) -> Message:
     """
     Stores a model response in the database.
 
@@ -43,7 +43,7 @@ def store_model_response(db: Session, session_id: str, content: str) -> Message:
     Returns:
         The created Message object.
     """
-    embedding = generate_embedding(content)
+    embedding = await generate_embedding(content)
     
     db_message = Message(
         session_id=session_id,
