@@ -186,10 +186,3 @@ curl -X POST http://127.0.0.1:8000/response \\
     "role": "model"
 }
 ```
-
-## Further Development
-*   Replace placeholder embedding generation with a real embedding model.
-*   Implement more sophisticated context selection and ranking.
-*   Add authentication and authorization.
-*   Expand error handling and input validation.
-*   Write comprehensive unit and integration tests. 
