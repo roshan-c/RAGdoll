@@ -5,7 +5,7 @@ A FastAPI-based service for managing and retrieving chat context using Retrieval
 ## Project Structure
 
 ```
-context-management-service/
+RAGdoll/
 ├── app/
 │   ├── api/
 │   │   ├── __init__.py
@@ -67,15 +67,25 @@ uv pip install -r requirements.txt
 The `requirements.txt` includes: `fastapi`, `uvicorn`, `sqlalchemy`, `psycopg2-binary`, `pgvector`, `numpy`, `python-dotenv`.
 
 ### 4. Configure Environment Variables (`.env` file)
-Create a `.env` file in the root of the `context-management-service` directory. It should contain your database connection URL.
+Create a `.env` file in the root of the `RAGdoll` directory. It should contain your database connection URL and your OpenAI API Key.
 
-Copy the example below and update it with your actual database credentials:
+Copy the example below and update it with your actual database credentials and OpenAI API Key:
 ```env
 # .env
 DATABASE_URL=postgresql://myuser:mypassword@localhost:5432/mydatabase
-EMBEDDING_DIMENSION=768 # This is fixed in code but good to note
+OPENAI_API_KEY=YOUR_OPENAI_API_KEY_HERE # Add your OpenAI API Key
+EMBEDDING_DIMENSION=1536 # Updated to reflect the model used (text-embedding-3-small)
 ```
-The `EMBEDDING_DIMENSION` is currently set to 768 in `app/core/config.py`.
+The `EMBEDDING_DIMENSION` is set to 1536 in `app/core/config.py` to match the `text-embedding-3-small` OpenAI model.
+
+**Obtaining an OpenAI API Key:**
+1.  Go to [https://platform.openai.com/](https://platform.openai.com/).
+2.  Sign up or log in to your account.
+3.  Navigate to the API keys section of your account settings (usually under "API Keys" or your organization settings).
+4.  Create a new secret key. **Copy this key immediately and store it securely.** You will not be able to see it again.
+5.  Add this key to your `.env` file as `OPENAI_API_KEY=YOUR_OPENAI_API_KEY_HERE`.
+
+The application uses the `text-embedding-3-small` model from OpenAI for generating message embeddings.
 
 ### 5. Set Up PostgreSQL Database with pgvector
 
@@ -109,7 +119,7 @@ If you have an existing PostgreSQL server:
 4.  Update your `.env` file with the correct `DATABASE_URL`.
 
 ### 6. Create Database Tables
-Once your `.env` file is configured and the database is running with the `pgvector` extension enabled, run the following script from the `context-management-service` root directory to create the necessary tables:
+Once your `.env` file is configured and the database is running with the `pgvector` extension enabled, run the following script from the `RAGdoll` root directory to create the necessary tables:
 
 ```bash
 python -c "from app.db.models import Base; from app.core.database import engine; Base.metadata.create_all(bind=engine); print('Tables created (if they didn\'t exist).')"
@@ -119,7 +129,7 @@ python -c "from app.db.models import Base; from app.core.database import engine;
 
 With the setup complete and your virtual environment activated:
 
-1.  Navigate to the `context-management-service` root directory.
+1.  Navigate to the `RAGdoll` root directory.
 2.  Run the FastAPI application using Uvicorn:
     ```bash
     PYTHONPATH=$PYTHONPATH:. uvicorn app.main:app --reload
