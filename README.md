@@ -1,4 +1,5 @@
 # RAGdoll
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/roshan-c/RAGdoll)
 
 A FastAPI-based service for managing and retrieving chat context using Retrieval-Augmented Generation (RAG) principles with placeholder embeddings and a PostgreSQL database. This service allows storing user messages and model responses, and retrieving relevant past messages based on (placeholder) semantic similarity.
 
