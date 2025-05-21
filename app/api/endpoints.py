@@ -30,7 +30,7 @@ router = APIRouter()
 async def handle_message(message_data: MessageCreate, db: Session = Depends(get_db)):
     try:
         # Step 1: Store the incoming user message
-        stored_message = context_service.store_user_message(
+        stored_message = await context_service.store_user_message(
             db=db,
             session_id=message_data.session_id,
             content=message_data.content,
@@ -39,7 +39,7 @@ async def handle_message(message_data: MessageCreate, db: Session = Depends(get_
 
         # Step 2: Retrieve relevant context
         # Generate embedding for the new message
-        new_message_embedding = generate_embedding(stored_message.content)
+        new_message_embedding = await generate_embedding(stored_message.content)
         
         retrieved_context_messages: List[MessageModel] = context_service.get_relevant_context(
             db=db,
@@ -74,7 +74,7 @@ async def handle_message(message_data: MessageCreate, db: Session = Depends(get_
 @router.post("/response", tags=["Context Management"], status_code=201)
 async def handle_response(response_data: ModelResponseCreate, db: Session = Depends(get_db)):
     try:
-        stored_model_response = context_service.store_model_response(
+        stored_model_response = await context_service.store_model_response(
             db=db,
             session_id=response_data.session_id,
             content=response_data.content
